@@ -8,15 +8,19 @@ import Login from '../pages/auth/Login'
 import PrivateRoute from '../pages/auth/PrivateRoute'
 import PrivatePage from "../pages/PrivatePage";
 import { AuthContextComponent } from "../contexts/authContext";
+import ParkingLotPage from "../pages/ParkingLotPage";
+import ReservationPage from "../pages/ResrvationPage";
 
 
 function App() {
   return (
         <Routes>
-          <Route path="/client">
-            <Route path='parkinglots/:id' element={<Home />} />
-           
-          </Route>
+
+            <Route path='/' element={<Home />} />
+            <Route path='parkinglots/:id' element={<ParkingLotPage />} />
+            <Route path='reservations/:guestUserPhone' element={<ReservationPage />} />
+
+
         </Routes>
   );
 }
