@@ -1,7 +1,4 @@
-import {useState} from "react"
-import paymentComplete from '../assets/styles/icons/payment-complete.png'
 import './CardPaymentConfirmed.css'
-import arrow from '../assets/styles/icons/arrow.png'
 import completeCheckIcon from '../assets/styles/icons/check_complete_done_green_success_icon (2).png'
 
 function CardPaymentConfirmed(props) {

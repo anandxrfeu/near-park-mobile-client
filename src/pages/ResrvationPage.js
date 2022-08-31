@@ -1,8 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import InitiateCheckOut from "../components/InitiateCheckOut";
-import ReservationCheckOut from "../components/ReservationCheckOut";
-import CardPaymentConfirmed from "../components/CardPaymentConfirmed"
 import CheckInForm from "../components/CheckInForm"
 
 function ReservationPage() {

@@ -56,7 +56,7 @@ function OneReservationPage() {
     }
     fetchData()
 
-  },[refresh])
+  },[phoneNumber, refresh])
 
   const checkOutReservation = async () => {
     try{
@@ -123,8 +123,6 @@ if (isLoading) {
     <div className="text-center">
 
       <div className="d-flex flex-column align-items-center">
-
-
         <div>
           {showInitiateCheckout && <InitiateCheckOut onCheckOut={checkOutReservation} guestReservation={guestReservation}/>}
         </div>
