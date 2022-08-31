@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Link, useParams } from "react-router-dom";
 import GenerateTicket from "../components/GenerateTicket";
-import TicketAndPhoneFind from "../components/TicketAndPhoneFind"
+import TicketAndPhoneFind from "../components/SearchReservation"
 import apiService from "../services/api.service"
 
 

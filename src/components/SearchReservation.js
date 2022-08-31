@@ -1,10 +1,24 @@
-import {useState} from 'react'
+import {useRef} from 'react'
+import {useNavigate} from 'react-router-dom'
+import apiService from '../services/api.service'
 
 
 
-function TicketAndPhoneFind() {
+function SearchReservation() {
 
-  const [guestUserPhone, setGuestUserPhone] = useState('')
+  const guestUserPhone = useRef()
+  const navigate = useNavigate()
+
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    try{
+      const reservation = await apiService.getAReservation(guestUserPhone.current.value)
+      //add validations 
+      navigate(`/reservations/${reservation.guestUserPhone}` )
+    }catch(err){
+      console.log(err)
+    } 
+  }
 
   return (
     <div className="text-center">
@@ -13,15 +27,14 @@ function TicketAndPhoneFind() {
           <h4 style={{fontWeight: "bold"}}>VIEW YOUR TICKET</h4>
         </div>
         <div style={{marginTop: "14px"}}>
-          <form>
+          <form onSubmit={submitHandler}>
             <div>
                       <input className="badge-pill"
                         style={{width:"260px", height: "50px", textAlign: "center", fontSize: "20px", fontWeight: "bold"}}
                         placeholder = "Cel Number"
                         type="number"
                         name="guestUserPhone"
-                        onChange={(e) => setGuestUserPhone(e.target.value)}
-                        value={guestUserPhone}
+                        ref={guestUserPhone}
                       />
             </div>
             <div>
@@ -38,4 +51,4 @@ function TicketAndPhoneFind() {
   );
 }
 
-export default  TicketAndPhoneFind;
+export default  SearchReservation;

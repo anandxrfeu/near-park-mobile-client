@@ -1,52 +1,8 @@
-import {useState, useEffect} from "react"
-import apiService from "../services/api.service"
-import {useParams} from 'react-router-dom'
 
 
 function InitiateCheckOut(props) {
 
-  const {onCheckOut} = props
-
-  const {phoneNumber} = useParams()
-
-  const [isLoading, setIsLoading] = useState(true)
-  const [guestReservation, setGuestReservation] = useState('')
-
-  const [vehicleType, setVehicleType] = useState('')
-  const [licensePlate, setLicensePlate] = useState('')
-  const [vehicleDescription, setVehicleDescription] = useState('')
-
-
-
-
-  useEffect(()=> {
-    async function fetchData() {
-      try {
-        const reservation = await apiService.getAReservation(phoneNumber)
-        console.log(reservation)
-        const reservationStartTimeStamp = new Date(reservation.createdAt)
-        reservation.startDate = `${reservationStartTimeStamp.getDay()}/${reservationStartTimeStamp.getMonth()}/${reservationStartTimeStamp.getFullYear()}`
-         reservation.startTime = `${reservationStartTimeStamp.getHours()}:${reservationStartTimeStamp.getMinutes()}`
-        setGuestReservation(reservation)
-          if(reservation && reservation.vehicle) {
-                setLicensePlate(reservation.vehicle.licensePlate)
-                setVehicleType(reservation.vehicle.type)
-                setVehicleDescription(reservation.vehicle.description)
-              }
-        setIsLoading(false)
-      } catch(err) {
-
-      }
-    }
-    fetchData()
-
-  },[])
-
-if (isLoading) {
-  return (
-    <p>loading ...</p>
-  )
-}
+  const {onCheckOut, guestReservation} = props
 
   return (
     <div className="text-center">
@@ -64,7 +20,7 @@ if (isLoading) {
               placeholder = "CellPhone Number"
               type="number"
               name="GuestUserPhone"
-              defaultValue={phoneNumber}
+              defaultValue={guestReservation.guestUserPhone}
             />
 
           </div>
@@ -88,7 +44,7 @@ if (isLoading) {
               placeholder = "MOTORBIKE | ABC-1234"
               type="text"
               name="TypeANDLicensePlate"
-              defaultValue={`${vehicleType} | ${licensePlate}`}
+              defaultValue={`${guestReservation.vehicle.vehicleType} | ${guestReservation.vehicle.licensePlate}`}
             />
           </div>
           <div style={{marginTop: "10px"}}>
@@ -97,7 +53,7 @@ if (isLoading) {
               placeholder = "VW JETTA PRETO"
               type="text"
               name="vehicleDescription"
-              defaultValue={vehicleDescription}
+              defaultValue={guestReservation.vehicle.vehicleDescription}
             />
           </div>
           <div style={{marginTop: "72px"}}>

@@ -35,13 +35,13 @@ function GenerateTicket(props) {
         </div>
         <div>
           <Link to="reservation">
-            <button className="badge-pill"
-            style={{width: "240px", height: "60px", backgroundColor: "black",
-            border: "1px solid black", color: "white", marginTop: "130px"
-          }}
-            >
-              GENERATE TICKET
-            </button>
+              <button className="badge-pill"
+              style={{width: "240px", height: "60px", backgroundColor: "black",
+              border: "1px solid black", color: "white", marginTop: "130px"
+            }}
+              >
+                GENERATE TICKET
+              </button>
           </Link>
         </div>
 
