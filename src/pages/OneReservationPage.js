@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
-import { Link , useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import InitiateCheckOut from "../components/InitiateCheckOut";
 import ReservationCheckOut from "../components/ReservationCheckOut";
 import CardPaymentConfirmed from "../components/CardPaymentConfirmed"
+import PaymentCard from "../components/PaymentCard";
 import apiService from "../services/api.service";
 
 function OneReservationPage() {
@@ -12,7 +13,7 @@ function OneReservationPage() {
   const [showInitiateCheckout, setShowInitiateCheckout] = useState(true)
   const [showReservationCheckOut, setReservationCheckout] = useState(false)
   const [showPayByCard, setShowPayByCard] = useState(false)
-
+  const [showPaymentConfirmation, setShowPaymentConfirmation] = useState(false)
 
   const [isLoading, setIsLoading] = useState(true)
   const [refresh, setRefresh] = useState(false)
@@ -43,6 +44,12 @@ function OneReservationPage() {
           setReservationCheckout(false)
           setShowPayByCard(true)
         }
+        if(reservation.status === "PAID"){
+          setShowInitiateCheckout(false)
+          setReservationCheckout(false)
+          setShowPayByCard(false)
+          setShowPaymentConfirmation(true)
+        }
       } catch(err) {
 
       }
@@ -56,8 +63,6 @@ function OneReservationPage() {
       const updatedReservation = await apiService.updateReservation(phoneNumber, {endedAt: new Date()})
       console.log(updatedReservation)
       setRefresh(!refresh)
-      setShowInitiateCheckout(false)
-      setReservationCheckout(true)
     }catch(err){
       console.log(err)
     }
@@ -70,14 +75,21 @@ function OneReservationPage() {
         const updatedReservation = await apiService.updateReservation(phoneNumber, {payBy: "CARD"})
         console.log(updatedReservation)
         setRefresh(!refresh)
-        setShowInitiateCheckout(false)
-        setReservationCheckout(false)
-        setShowPayByCard(true)
       }catch(err){
         console.log(err)
       }
     }else if (option === "CASH"){
       console.log("i want to pay by CASH")
+    }
+  }
+
+  const makePayment = async () => {
+    try{
+      const updatedReservation = await apiService.updateReservation(phoneNumber, { "status": "PAID"})
+      console.log(updatedReservation)
+      setRefresh(!refresh)
+    }catch(err){
+      console.log(err)
     }
   }
 
@@ -120,11 +132,11 @@ if (isLoading) {
           {showReservationCheckOut && <ReservationCheckOut guestReservation={guestReservation} updatePaymentMethod={updatePaymentMethod}/>}
         </div>
         <div>
-          {showPayByCard && <p>Pay by card now!!</p>}
+          {showPayByCard && <PaymentCard guestReservation={guestReservation} makePayment={makePayment}/>}
         </div>
-        {/* <div>
-          <CardPaymentConfirmed/>
-        </div> */}
+        <div>
+          {showPaymentConfirmation && <CardPaymentConfirmed guestReservation={guestReservation}/>}
+        </div>
       </div>
     </div>
   );
