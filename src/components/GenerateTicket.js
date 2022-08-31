@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function GenerateTicket() {
+function GenerateTicket(props) {
+  const {pricing} = props
+
   return (
     <div style={{display: "flex",
         flexDirection: "column", alignItems: "center"}}>
@@ -23,22 +25,24 @@ function GenerateTicket() {
                 <p>24 HR</p>
               </div>
               <div  style={{display: "flex", flexDirection: "column", textAlign: "left"}}>
-                <p>R$<span style={{fontWeight:"bold", fontSize: "18px", marginLeft: " 2px"}}> 35</span></p>
-                <p>R$<span style={{fontWeight:"bold", fontSize: "18px", marginLeft: " 2px"}}> 12</span></p>
-                <p>R$<span style={{fontWeight:"bold", fontSize: "18px", marginLeft: " 2px"}}> 75</span></p>
-                <p>R$<span style={{fontWeight:"bold", fontSize: "18px", marginLeft: " 2px"}}> 120</span></p>
+                <p>R$<span style={{fontWeight:"bold", fontSize: "18px", marginLeft: " 2px"}}>{pricing.oneHourPrice}</span></p>
+                <p>R$<span style={{fontWeight:"bold", fontSize: "18px", marginLeft: " 2px"}}>{pricing.oneHourAdditionalPrice}</span></p>
+                <p>R$<span style={{fontWeight:"bold", fontSize: "18px", marginLeft: " 2px"}}>{pricing.eightHourPrice}</span></p>
+                <p>R$<span style={{fontWeight:"bold", fontSize: "18px", marginLeft: " 2px"}}>{pricing.twentyFourHourPrice}</span></p>
               </div>
 
           </div>
         </div>
         <div>
-          <button className="badge-pill"
-          style={{width: "240px", height: "60px", backgroundColor: "black",
-          border: "1px solid black", color: "white", marginTop: "130px"
-        }}
-          >
-            GENERATE TICKET
-          </button>
+          <Link to="reservation">
+            <button className="badge-pill"
+            style={{width: "240px", height: "60px", backgroundColor: "black",
+            border: "1px solid black", color: "white", marginTop: "130px"
+          }}
+            >
+              GENERATE TICKET
+            </button>
+          </Link>
         </div>
 
 

@@ -1,11 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import InitiateCheckOut from "../components/InitiateCheckOut";
 import ReservationCheckOut from "../components/ReservationCheckOut";
 import CardPaymentConfirmed from "../components/CardPaymentConfirmed"
-import CheckInForm from "../components/CheckInForm"
 
-function ReservationPage() {
+function OneReservationPage() {
+  console.log("in one reservation page")
+
+  const [showInitiateCheckout, setShowInitiateCheckout] = useState(true)
+  const [showReservationCheckOut, setReservationCheckout] = useState(false)
+
+  const onCheckOut = () => {
+    console.log("in on CheckOut")
+    setShowInitiateCheckout(false)
+    setReservationCheckout(true)
+
+  }
 
     //  useEffect(() => {
     // async function fetchData() {
@@ -155,15 +165,13 @@ function ReservationPage() {
 
       <div className="d-flex flex-column align-items-center">
 
+
         <div>
-          <CheckInForm/>
+          {showInitiateCheckout && <InitiateCheckOut onCheckOut={onCheckOut}/>}
         </div>
-        {/* <div>
-          <InitiateCheckOut/>
-        </div> */}
-        {/* <div>
-          <ReservationCheckOut/>
-        </div> */}
+         <div>
+          {showReservationCheckOut && <ReservationCheckOut/>}
+        </div>
         {/* <div>
           <CardPaymentConfirmed/>
         </div> */}
@@ -175,4 +183,4 @@ function ReservationPage() {
   );
 }
 
-export default ReservationPage;
+export default OneReservationPage;

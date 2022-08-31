@@ -30,7 +30,27 @@ class ApiService {
     return await this.api.post("/login", user);
   }
 
-    async getGuestUserPhoneReservation(guestUserPhone) {
+  //   async getGuestUserPhoneReservation(guestUserPhone) {
+  //   const res = await this.api.get(`/reservations/guest/${guestUserPhone}`);
+  //   return res.data
+  // }
+
+
+    async getParkingLotById(id) {
+    console.log("in api service getparkinglot")
+    const res = await this.api.get(`/parkingLots/${id}/pricing`);
+
+    return res.data
+  }
+
+    async createReservation(payload) {
+
+    const res = await this.api.post("/reservations", payload);
+    return res.data
+  }
+
+      async getAReservation(guestUserPhone) {
+
     const res = await this.api.get(`/reservations/guest/${guestUserPhone}`);
     return res.data
   }

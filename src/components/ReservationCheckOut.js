@@ -73,7 +73,7 @@ function ReservationCheckOut() {
             style={{border: "1px solid black", width: "240px", height: "50px", backgroundColor: "black", color: "white"}}
             >PAYMENT</button>
           </div> */}
-          {/* <div style={{marginTop: "72px", width: "280px", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
+          <div style={{marginTop: "72px", width: "280px", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
             <div>
               <button className="badge-pill"
               style={{border: "1px solid black", height: "50px", width: "132px", backgroundColor: "black", color: "white"}}
@@ -84,14 +84,14 @@ function ReservationCheckOut() {
               style={{border: "1px solid black", height: "50px", width: "132px", backgroundColor: "black", color: "white"}}
               >CASH</button>
             </div>
-          </div> */}
-          <div style={{marginTop: "38px"}}>
+          </div>
+          {/* <div style={{marginTop: "38px"}}>
             <h4 style={{fontWeight: "500", fontSize: "18px"}}>PAYMENT TYPE</h4>
             <div style={{border: "1px solid black", borderRadius: "8px",
             textAlign: "center", width: "146px", height: "66px", marginTop: "20px"}}>
               <h3 style={{paddingTop: "14px", fontWeight: "bold"}}>CASH</h3>
             </div>
-          </div>
+          </div> */}
 
 
 

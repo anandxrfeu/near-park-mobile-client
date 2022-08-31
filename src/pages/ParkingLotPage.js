@@ -1,35 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import { Link, useParams } from "react-router-dom";
 import GenerateTicket from "../components/GenerateTicket";
 import TicketAndPhoneFind from "../components/TicketAndPhoneFind"
+import apiService from "../services/api.service"
+
 
 function ParkingLotPage() {
+   const {id} = useParams()
 
-// const searchReservation = (searchText) => {
-//     let  filteredReservationList  = []
-//     if(searchText && isLetter(searchText[0])){
-//       filteredReservationList = reservationList.filter(resrvtn => {
-//         return resrvtn.vehicle.licensePlate.toLowerCase().startsWith(searchText.toLowerCase())
-//       })
-//     }else{
-//       filteredReservationList = reservationList.filter(resrvtn => {
-//         return resrvtn.guestUserPhone.startsWith(searchText)
-//       })
-//     }
-//     setReservationListFiltered(filteredReservationList)
+  const [isLoading, setIsLoading] = useState(true)
+  const [pricing, setPricing] = useState('')
 
-//   }
+  useEffect(() => {
+    async function fetchData() {
+     try {
+      const parkingLotPricing = await apiService.getParkingLotById(id)
+      console.log("parking", parkingLotPricing)
+      setPricing(parkingLotPricing)
+      setIsLoading(false)
+     } catch(err) {
+      console.log(err)
+     }
 
-//   function isLetter(c) {
-//     return c.toLowerCase() !== c.toUpperCase();
-//   }
+    }
+     fetchData()
+
+  }, [id])
+
+  if (isLoading) {
+    return (
+      <p>loading ...</p>
+    )
+  }
 
   return (
     <div className="text-center">
       <div className="d-flex flex-column align-items-center">
-        {/* <div>
-          <GenerateTicket/>
-        </div> */}
+        <div>
+          <GenerateTicket pricing={pricing}/>
+        </div>
         {/* <div>
           <TicketAndPhoneFind/>
         </div> */}

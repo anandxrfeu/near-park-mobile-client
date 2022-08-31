@@ -10,6 +10,7 @@ import PrivatePage from "../pages/PrivatePage";
 import { AuthContextComponent } from "../contexts/authContext";
 import ParkingLotPage from "../pages/ParkingLotPage";
 import ReservationPage from "../pages/ResrvationPage";
+import OneReservationPage from '../pages/OneReservationPage'
 
 
 function App() {
@@ -17,8 +18,15 @@ function App() {
         <Routes>
 
             <Route path='/' element={<Home />} />
-            <Route path='parkinglots/:id' element={<ParkingLotPage />} />
-            <Route path='reservations/:guestUserPhone' element={<ReservationPage />} />
+            <Route path="/parkinglots">
+                <Route path=':id' element={<ParkingLotPage />} />
+                <Route path=':id/reservation' element={<ReservationPage />} />
+            </Route>
+              <Route path="/reservations/:phoneNumber" element={<OneReservationPage/>}>
+
+              </Route>
+
+
 
 
         </Routes>
