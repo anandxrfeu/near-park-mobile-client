@@ -10,9 +10,9 @@ function ReservationPage() {
 
       <div className="d-flex flex-column align-items-center">
 
-        {/* <div>
+        <div>
           <CheckInForm/>
-        </div> */}
+        </div>
         {/* <div>
           <InitiateCheckOut/>
         </div> */}
