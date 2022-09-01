@@ -1,4 +1,6 @@
-import {useRef} from 'react'
+import "./SearchReservation.css"
+
+import {useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import apiService from '../services/api.service'
 
@@ -8,6 +10,7 @@ function SearchReservation() {
 
   const guestUserPhone = useRef()
   const navigate = useNavigate()
+  const [error, setError] = useState("")
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -17,6 +20,7 @@ function SearchReservation() {
       navigate(`/reservations/${reservation.guestUserPhone}` )
     }catch(err){
       console.log(err)
+      setError(err.response.data.msg)
     } 
   }
 
@@ -42,6 +46,9 @@ function SearchReservation() {
               style={{width: "200px", height: "50px", backgroundColor: "black",
                border: "1px solid black", color: "white", marginTop: "100px", fontSize: "22px", fontWeight: '300'}}
               >FIND</button>
+            </div>
+            <div className="error-container">
+              {error !== "" && <p>{error}</p>}
             </div>
           </form>
         </div>
