@@ -74,16 +74,16 @@ function CheckInForm() {
             </div>
 
             </div>
-            <div style={{marginTop: "44px"}}>
-                <div className='vehicleType' >
-                  <select value={vehicleType} className="vehicleType  badge-pill"
-                  onChange={(e) => setVehicleType(e.target.value) }>
-                    <option className='vehicleType'>VEHICLE TYPE</option>
-                    <option className='vehicleType' value="CAR">Carro</option>
-                    <option className='vehicleType' value="MOTORBIKE">Moto</option>
-                  </select>
-                </div>
-              </div>
+            <div style={{marginTop: "40px"}} >
+              <select value={vehicleType} className="form-select badge-pill"
+                style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
+              onChange={(e) => setVehicleType(e.target.value) }>
+                <option selected>VEHICLE TYPE</option>
+                <option value="CAR">Carro</option>
+                <option value="MOTORBIKE">Moto</option>
+              </select>
+            </div>
+
             <div style={{marginTop: "10px"}}>
               <input className="badge-pill"
                 style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
