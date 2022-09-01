@@ -49,16 +49,16 @@ class ApiService {
     return res.data
   }
 
-      async getAReservation(guestUserPhone) {
-
+  async getAReservation(guestUserPhone) {
     const res = await this.api.get(`/reservations/guest/${guestUserPhone}`);
     return res.data
   }
 
-  //   async createGuestUserPhoneReservation(guestUserPhone) {
-  //   const res = await this.api.patch(`/reservations/guest/${guestUserPhone}`);
-  //   return res.data
-  // parkinglotId }
+  async updateReservation(guestUserPhone, payload) {
+    const res = await this.api.patch(`/reservations/guest/${guestUserPhone}`, payload);
+    return res.data
+  }
+
 
 
 

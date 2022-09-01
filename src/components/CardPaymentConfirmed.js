@@ -1,22 +1,16 @@
-import {useState} from "react"
-import paymentComplete from '../assets/styles/icons/payment-complete.png'
 import './CardPaymentConfirmed.css'
-import arrow from '../assets/styles/icons/arrow.png'
 import completeCheckIcon from '../assets/styles/icons/check_complete_done_green_success_icon (2).png'
 
-function CardPaymentConfirmed() {
+function CardPaymentConfirmed(props) {
 
-  const [guestUserPhone, setGuestUserPhone] = useState('')
-  const [vehicleType, setVehicleType] = useState('')
-  const [licensePlate, setLicensePlate] = useState('')
-  const [vehicleDescription, setVehicleDescription] = useState('')
+ const {guestReservation} = props
 
   return (
     <div className="text-center">
 
       <div className="d-flex flex-column align-items-center">
         <div style={{marginTop: "50px"}}>
-          <h3 style={{fontWeight: "bold", fontSize: "24px"}}>TICKET# wHw3y</h3>
+          <h3 style={{fontWeight: "bold", fontSize: "24px"}}>TICKET# {guestReservation.ticket}</h3>
         </div>
         <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
           <div style={{marginTop: "16px"}}>
@@ -25,7 +19,7 @@ function CardPaymentConfirmed() {
               placeholder = "CellPhone Number"
               type="number"
               name="GuestUserPhone"
-              defaultValue={guestUserPhone}
+              defaultValue={guestReservation.guestUserPhone}
             />
           </div>
           <div style={{marginTop: "12px"}}>
@@ -34,13 +28,13 @@ function CardPaymentConfirmed() {
               placeholder = "MOTORBIKE | ABC-1234"
               type="text"
               name="TypeANDLicensePlate"
-              defaultValue={`${vehicleType} | ${licensePlate}`}
+              defaultValue={`${guestReservation.vehicle.type} | ${guestReservation.vehicle.licensePlate}`}
             />
           </div>
           <div style={{marginTop: "46px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
             <div style={{color: "#FED000", backgroundColor: "black", width: "200px", height: "50px",
              textAlign: "center", border: "1px solid black", borderRadius: "10px", paddingTop:"6px", paddingBottom:"8px"}}>
-              <h3>ACTIVE</h3>
+              <h3>{guestReservation.status !== "CLOSED" ? "ACTIVE" : "CLOSED"}</h3>
               {/* <h1>{reservation.status !== "CLOSED" ? "ACTIVE" : "CLOSED"}</h1> */}
             </div>
           </div>
@@ -50,11 +44,11 @@ function CardPaymentConfirmed() {
             width: "310px", height:"104px", paddingTop: "14px", borderRadius: "10px", marginTop: "12px"}}>
               <div style={{textAlign: "left"}}>
                 <h5 style={{marginBottom: "6px"}}>DURATION</h5>
-                <h2 style={{fontWeight: "bold"}}>2 H</h2>
+                <h2 style={{fontWeight: "bold"}}>{guestReservation.duration} H</h2>
               </div>
               <div style={{textAlign: "left", marginLeft: "22px"}}>
                 <h5 style={{marginBottom: "6px"}}>TOTAL</h5>
-                <h2 style={{fontWeight: "bold"}}><span style={{fontSize: "22px", fontWeight: "400", paddingRight:"8px"}}>R$</span> 15,00</h2>
+                <h2 style={{fontWeight: "bold"}}><span style={{fontSize: "22px", fontWeight: "400", paddingRight:"8px"}}>R$</span>{guestReservation.price}</h2>
               </div>
             </div>
           </div>
@@ -96,7 +90,7 @@ function CardPaymentConfirmed() {
 
         <div style={{marginTop: "44px"}}>
           <div style={{marginBottom: "18px"}}>
-            <h4 style={{fontSize: "22px", fontWeight: "500"}}>CHECK-OUT CONFIRMED!</h4>
+            <h4 style={{fontSize: "22px", fontWeight: "500"}}>PAYMENT CONFIRMED!</h4>
           </div>
           <div>
             <img style={{width: "200px", height: "200px"}} src={completeCheckIcon} alt="paycompleteIcon"/>

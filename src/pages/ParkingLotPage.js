@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import GenerateTicket from "../components/GenerateTicket";
-import TicketAndPhoneFind from "../components/TicketAndPhoneFind"
 import apiService from "../services/api.service"
 
 

@@ -1,183 +1,140 @@
-import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { useParams} from "react-router-dom";
 import InitiateCheckOut from "../components/InitiateCheckOut";
 import ReservationCheckOut from "../components/ReservationCheckOut";
 import CardPaymentConfirmed from "../components/CardPaymentConfirmed"
+import PaymentCard from "../components/PaymentCard";
+import apiService from "../services/api.service";
 
 function OneReservationPage() {
-  console.log("in one reservation page")
-
+  
+  const {phoneNumber} = useParams()
+  
   const [showInitiateCheckout, setShowInitiateCheckout] = useState(true)
   const [showReservationCheckOut, setReservationCheckout] = useState(false)
+  const [showPayByCard, setShowPayByCard] = useState(false)
+  const [showPaymentConfirmation, setShowPaymentConfirmation] = useState(false)
 
-  const onCheckOut = () => {
-    console.log("in on CheckOut")
-    setShowInitiateCheckout(false)
-    setReservationCheckout(true)
+  const [isLoading, setIsLoading] = useState(true)
+  const [refresh, setRefresh] = useState(false)
+  const [guestReservation, setGuestReservation] = useState('')
 
+  useEffect(()=> {
+    async function fetchData() {
+      try {
+        const reservation = await apiService.getAReservation(phoneNumber)
+        console.log(reservation)
+        const reservationStartTimeStamp = new Date(reservation.createdAt)
+        reservation.startDate = `${reservationStartTimeStamp.getDay()}/${reservationStartTimeStamp.getMonth()}/${reservationStartTimeStamp.getFullYear()}`
+        reservation.startTime = `${reservationStartTimeStamp.getHours()}:${reservationStartTimeStamp.getMinutes()}`
+        setGuestReservation(reservation)
+        setIsLoading(false)
+        if(reservation.endedAt){
+          const reservationEndTimeStamp = new Date(reservation.endedAt)
+          reservation.endDate = `${reservationEndTimeStamp.getDay()}/${reservationEndTimeStamp.getMonth()}/${reservationEndTimeStamp.getFullYear()}`
+          reservation.endTime = `${reservationEndTimeStamp.getHours()}:${reservationEndTimeStamp.getMinutes()}`
+          const duration = calculateDurationInHours(reservation.createdAt, reservation.endedAt)
+          reservation.duration = duration
+          reservation.price = calculatePrice(reservation.parkingLot.pricing, duration)
+          setShowInitiateCheckout(false)
+          setReservationCheckout(true)
+        }
+        if(reservation.payBy === "CARD"){
+          setShowInitiateCheckout(false)
+          setReservationCheckout(false)
+          setShowPayByCard(true)
+        }
+        if(reservation.status === "PAID"){
+          setShowInitiateCheckout(false)
+          setReservationCheckout(false)
+          setShowPayByCard(false)
+          setShowPaymentConfirmation(true)
+        }
+      } catch(err) {
+
+      }
+    }
+    fetchData()
+
+  },[phoneNumber, refresh])
+
+  const checkOutReservation = async () => {
+    try{
+      const updatedReservation = await apiService.updateReservation(phoneNumber, {endedAt: new Date()})
+      console.log(updatedReservation)
+      setRefresh(!refresh)
+    }catch(err){
+      console.log(err)
+    }
   }
 
-    //  useEffect(() => {
-    // async function fetchData() {
-    //   try {
-    //     setLoading(false)
-    //     const reservations = await apiService.getAllReservationsForAParkingLot(parkingLotSelect._id)
-    //     setReservationList(reservations)
-    //     setReservationListFiltered(reservations)
+  const updatePaymentMethod  = async (option) => {
+    if(option === "CARD"){
+      console.log("i want to pay by CARD")
+      try{
+        const updatedReservation = await apiService.updateReservation(phoneNumber, {payBy: "CARD"})
+        console.log(updatedReservation)
+        setRefresh(!refresh)
+      }catch(err){
+        console.log(err)
+      }
+    }else if (option === "CASH"){
+      console.log("i want to pay by CASH")
+    }
+  }
 
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // }
+  const makePayment = async () => {
+    try{
+      const updatedReservation = await apiService.updateReservation(phoneNumber, { "status": "PAID"})
+      console.log(updatedReservation)
+      setRefresh(!refresh)
+    }catch(err){
+      console.log(err)
+    }
+  }
 
-  //     const createReservationHandler = async (reservation) => {
-  //   console.log(reservation)
-  //   const payload = {
-  //     ...reservation,
-  //   "parkingLot": parkingLotSelect._id.toString(),
-  //   "owner": loggedInUser.user._id.toString()
-  //   }
-  //   console.log(payload)
-  //   try {
-  //       const reservationData = await apiService.createReservation(payload)
-  //       // setReservationList((previousState)=> {
-  //       //   return [reservationData, ...previousState]
-  //       // })
-  //       setRefresh(!refresh)
+  const calculateDurationInHours = (start, end) => {
+    const startDate = new Date(start)
+    const endDate = new Date(end)
+    const durationInHours = Math.ceil((endDate.valueOf() - startDate.valueOf())/3600000)
+    return durationInHours
+  }
+  
+  const calculatePrice = (pricing, durationInHours) => {
+    let price = 0
+    if(durationInHours >= 24){
+        price = parseInt(pricing.twentyFourHourPrice) + (durationInHours - 24)*parseInt(pricing.oneHourAdditionalPrice)
+    } else if (durationInHours >= 8 ){
+        price = parseInt(pricing.eightHourPrice) + (durationInHours - 8)*parseInt(pricing.oneHourAdditionalPrice)
+    }else{
+        price = parseInt(pricing.oneHourPrice) + (durationInHours - 1)*parseInt(pricing.oneHourAdditionalPrice)
+    }
+    return price
+  }
 
-
-  //   } catch(err){
-
-  //   }
-  // }
-
-//     const {reservation, updateReservation} = props
-
-//   const [updateGuestUserPhone, setUpdateGuestUserPhone] = useState('')
-//   const [isLoading, setIsLoading] = useState(true)
-//   const [duration, setDuration] = useState('')
-//   const [price, setPrice] = useState("")
-
-//   useEffect(() => {
-//     if (reservation) {
-//       setUpdateGuestUserPhone(reservation.guestUserPhone)
-//       const reservationDuration = calculateDurationInHours(reservation.createdAt, new Date())
-//       setDuration(reservationDuration)
-//       if (reservation.parkingLot) {
-//         setPrice(calculatePrice(reservation.parkingLot.pricing, reservationDuration))
-//       }
-
-
-//       setIsLoading(false)
-//     }
-
-
-//   }, [reservation])
-
-//   const editHandler = (e) => {
-//     e.preventDefault()
-//     const updatedReservation = {
-//       guestUserPhone: updateGuestUserPhone
-//     }
-//     console.log("updatedReservation",updatedReservation)
-//     updateReservation(updatedReservation)
-//   }
-
-//   const calculateDurationInHours = (start, end) => {
-//     const startDate = new Date(start)
-//     const endDate = new Date(end)
-
-//     const durationInHours = Math.ceil((endDate.valueOf() - startDate.valueOf())/3600000)
-//     return durationInHours
-//   }
-
-//   const calculatePrice = (pricing, durationInHours) => {
-//     console.log(pricing, durationInHours)
-//     let price = 0
-//     if(durationInHours >= 24){
-//         price = parseInt(pricing.twentyFourHourPrice) + (durationInHours - 24)*parseInt(pricing.oneHourAdditionalPrice)
-//     } else if (durationInHours >= 8 ){
-//         price = parseInt(pricing.eightHourPrice) + (durationInHours - 8)*parseInt(pricing.oneHourAdditionalPrice)
-//     }else{
-//         price = parseInt(pricing.oneHourPrice) + (durationInHours - 1)*parseInt(pricing.oneHourAdditionalPrice)
-//     }
-//     console.log("price > ",price)
-//     return price
-// }
-
-  // const {reservation, updateReservation} = props
-
-  // const [licensePlate, setLicensePlate] = useState("")
-  // const [vehicleType, setVehicleType] = useState("")
-  // const [vehicleDescription, setVehicleDescription] = useState("")
-  // const [ticketCode, setTicketCode] = useState("")
-  // const [checkIn, setCheckIn] = useState("")
-  // const [isLoading, setIsLoading] = useState(true)
-
-  // useEffect(() => {
-  //   if(reservation && reservation.vehicle) {
-  //     setLicensePlate(reservation.vehicle.licensePlate)
-  //     setVehicleType(reservation.vehicle.type)
-  //     setVehicleDescription(reservation.vehicle.description)
-  //   }
-  //   if(reservation) {
-  //     setTicketCode(reservation.ticket)
-  //     setCheckIn(reservation.startTime)
-  //   }
-
-  //   setIsLoading(false)
-
-  // }, [reservation])
-
-  // const editHandler = (e) => {
-  //   e.preventDefault()
-  //   const payload = {
-  //     vehicle : {
-  //       licensePlate : licensePlate,
-  //       type : vehicleType,
-  //       description: vehicleDescription,
-  //     }
-
-  //   }
-  //   updateReservation(payload)
-  // }
-
-//   import { useNavigate } from 'react-router-dom'
-
-// const ParkingLotCreatePage = (props) => {
-
-//   const navigate = useNavigate();
-
-//   const onSubmitHandler = async (parkingLot) => {
-//     console.log("onSubmitHandler.. in ParkingLotCreatePage ..",parkingLot )
-//     try{
-//       await apiService.createParkingLot(parkingLot)
-//       navigate("/saas/parkinglots");
-//     }catch(err){
-//       console.log(err)
-//     }
-//   }
-
+if (isLoading) {
+  return (
+    <p>loading ...</p>
+  )
+}
 
 
   return (
     <div className="text-center">
 
       <div className="d-flex flex-column align-items-center">
-
-
         <div>
-          {showInitiateCheckout && <InitiateCheckOut onCheckOut={onCheckOut}/>}
+          {showInitiateCheckout && <InitiateCheckOut onCheckOut={checkOutReservation} guestReservation={guestReservation}/>}
         </div>
          <div>
-          {showReservationCheckOut && <ReservationCheckOut/>}
+          {showReservationCheckOut && <ReservationCheckOut guestReservation={guestReservation} updatePaymentMethod={updatePaymentMethod}/>}
         </div>
-        {/* <div>
-          <CardPaymentConfirmed/>
-        </div> */}
-
-
-
+        <div>
+          {showPayByCard && <PaymentCard guestReservation={guestReservation} makePayment={makePayment}/>}
+        </div>
+        <div>
+          {showPaymentConfirmation && <CardPaymentConfirmed guestReservation={guestReservation}/>}
+        </div>
       </div>
     </div>
   );
