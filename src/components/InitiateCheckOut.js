@@ -44,7 +44,7 @@ function InitiateCheckOut(props) {
               placeholder = "MOTORBIKE | ABC-1234"
               type="text"
               name="TypeANDLicensePlate"
-              defaultValue={`${guestReservation.vehicle.vehicleType} | ${guestReservation.vehicle.licensePlate}`}
+              defaultValue={`${guestReservation.vehicle.type} | ${guestReservation.vehicle.licensePlate}`}
             />
           </div>
           <div style={{marginTop: "10px"}}>
@@ -53,7 +53,7 @@ function InitiateCheckOut(props) {
               placeholder = "VW JETTA PRETO"
               type="text"
               name="vehicleDescription"
-              defaultValue={guestReservation.vehicle.vehicleDescription}
+              defaultValue={guestReservation.vehicle.description}
             />
           </div>
           <div style={{marginTop: "72px"}}>

@@ -1,5 +1,7 @@
 import './CardPaymentConfirmed.css'
 import completeCheckIcon from '../assets/styles/icons/check_complete_done_green_success_icon (2).png'
+import arrow from '../assets/styles/icons/arrow.png'
+import paymentComplete from '../assets/styles/icons/payment-complete.png'
 
 function CardPaymentConfirmed(props) {
 
@@ -53,7 +55,7 @@ function CardPaymentConfirmed(props) {
             </div>
           </div>
 
-          {/* <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly",
+          <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly",
             width: "240px", marginTop: "80px"}}>
             <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "120px"}}>
               <div>
@@ -85,17 +87,17 @@ function CardPaymentConfirmed(props) {
                 </p>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
 
-        <div style={{marginTop: "44px"}}>
+        {/* <div style={{marginTop: "44px"}}>
           <div style={{marginBottom: "18px"}}>
             <h4 style={{fontSize: "22px", fontWeight: "500"}}>PAYMENT CONFIRMED!</h4>
           </div>
           <div>
             <img style={{width: "200px", height: "200px"}} src={completeCheckIcon} alt="paycompleteIcon"/>
           </div>
-        </div>
+        </div> */}
 
       </div>
     </div>
