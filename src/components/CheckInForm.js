@@ -1,5 +1,4 @@
-import isLicensePlate from 'validator/lib/isLicensePlate';
-import {useState, useRef} from "react"
+import {useState} from "react"
 import {useParams, useNavigate} from 'react-router-dom'
 import apiService from "../services/api.service"
 
@@ -8,43 +7,35 @@ function CheckInForm() {
 
   const [guestUserPhone, setGuestUserPhone] = useState('')
   const [vehicleType, setVehicleType] = useState('')
-  //const [LicensePlate, setLicensePlate] = useState('')
+  const [LicensePlate, setLicensePlate] = useState('')
   const [vehicleDescription, setVehicleDescription] = useState('')
-
-  const LicensePlate = useRef()
-  const [error, setError] = useState("")
 
   const navigate = useNavigate()
 
   const onSubmitHandler = async (e) => {
     e.preventDefault()
-    
-    if(isLicensePlate(LicensePlate.current.value, ['pt-BR'])){
-      
-      const payload = {
-        vehicle: {
-          type: vehicleType,
-          licensePlate: LicensePlate.current.value,
-          description: vehicleDescription
-        },
-        guestUserPhone: guestUserPhone,
-        parkingLot: id
-      }
-      console.log("payload", payload)
-      try {
-          const reservation = await apiService.createReservation(payload)
-          if (reservation.guestUserPhone){
-          navigate(`/reservations/${guestUserPhone}`)
-          }
-      } catch (err) {
-        console.log(err)
-      }
-
-    }else{
-      setError("Incorrect license Plate number")
-    }
+    const payload = {
+      vehicle: {
+        type: vehicleType,
+        licensePlate: LicensePlate,
+        description: vehicleDescription
+      },
+      guestUserPhone: guestUserPhone,
+      parkingLot: id
+        }
+        console.log("payload", payload)
+        try {
+           const reservation = await apiService.createReservation(payload)
+           console.log(reservation)
+           if (reservation.guestUserPhone){
+            navigate(`/reservations/${guestUserPhone}`)
+           }
+        } catch (err) {
+          console.log(err)
+        }
 
   }
+
 
 
 
@@ -71,26 +62,14 @@ function CheckInForm() {
 
             <div style={{marginTop: "8px"}}>
             <div style={{marginTop: "30px"}}>
-              {/* <input className="badge-pill"
+              <input className="badge-pill"
                 style={{border: "1px solid black", width: "220px", height: "44px", textAlign: "center"}}
                 placeholder = "License Plate"
                 type="text"
                 name="LicensePlate"
                 onChange={(e) => setLicensePlate(e.target.value) }
                 value={LicensePlate}
-              /> */}
-
-               <input className="badge-pill"
-                style={{border: "1px solid black", width: "220px", height: "44px", textAlign: "center"}}
-                placeholder = "License Plate"
-                type="text"
-                name="LicensePlate"
-                ref={LicensePlate}
-                onChange={() => {
-                  setError("")
-                }}
               />
-              {error !== "" && <p style={{color: "red"}}>Incorrect license Plate number</p>}
 
             </div>
 
