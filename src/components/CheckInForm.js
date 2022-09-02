@@ -75,10 +75,10 @@ function CheckInForm() {
 
             </div>
             <div style={{marginTop: "40px"}} >
-              <select value={vehicleType} className="form-select badge-pill"
+              <select value={vehicleType} className="badge-pill"
                 style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
               onChange={(e) => setVehicleType(e.target.value) }>
-                <option selected>VEHICLE TYPE</option>
+                <option>VEHICLE TYPE</option>
                 <option value="CAR">Carro</option>
                 <option value="MOTORBIKE">Moto</option>
               </select>
@@ -87,7 +87,7 @@ function CheckInForm() {
             <div style={{marginTop: "10px"}}>
               <input className="badge-pill"
                 style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
-                placeholder = "VW JETTA PRETO"
+                placeholder = "Vehicle Description"
                 type="text"
                 name="vehicleDescription"
                 onChange={(e) => setVehicleDescription(e.target.value) }

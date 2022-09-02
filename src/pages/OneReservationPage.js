@@ -7,9 +7,9 @@ import PaymentCard from "../components/PaymentCard";
 import apiService from "../services/api.service";
 
 function OneReservationPage() {
-  
+
   const {phoneNumber} = useParams()
-  
+
   const [showInitiateCheckout, setShowInitiateCheckout] = useState(true)
   const [showReservationCheckOut, setReservationCheckout] = useState(false)
   const [showPayByCard, setShowPayByCard] = useState(false)
@@ -19,20 +19,40 @@ function OneReservationPage() {
   const [refresh, setRefresh] = useState(false)
   const [guestReservation, setGuestReservation] = useState('')
 
+  // const formatTime = (time) => {
+  //   return Number(time) < 10 ? `0${time}` : time
+  // }
+
+  //   const startDateTime = new Date(reservation.createdAt)
+  // reservation.startTime = `${formatTime(startDateTime.getHours())}:${formatTime(startDateTime.getMinutes())} `;
+
+  // if (reservation.endedAt) {
+  //   const endDateTime = new Date(reservation.endedAt)
+  //   reservation.endTime = `${formatTime(endDateTime.getHours())}:${formatTime(endDateTime.getMinutes())} `;
+  // }
+
+    //  const startDateTime = new Date(reservation.createdAt)
+    //  reservation.startTime = `${formatTime(startDateTime.getHours())}:${formatTime(startDateTime.getMinutes())} `;
+
+    const formatTime = (time) => {
+    return Number(time) < 10 ? `0${time}` : time
+  }
+
   useEffect(()=> {
     async function fetchData() {
       try {
         const reservation = await apiService.getAReservation(phoneNumber)
         console.log(reservation)
+
         const reservationStartTimeStamp = new Date(reservation.createdAt)
-        reservation.startDate = `${reservationStartTimeStamp.getDay()}/${reservationStartTimeStamp.getMonth()}/${reservationStartTimeStamp.getFullYear()}`
-        reservation.startTime = `${reservationStartTimeStamp.getHours()}:${reservationStartTimeStamp.getMinutes()}`
+        reservation.startDate = `${formatTime(reservationStartTimeStamp.getDate())}/${formatTime(reservationStartTimeStamp.getMonth() + 1)}/${reservationStartTimeStamp.getFullYear()}`
+        reservation.startTime = `${formatTime(reservationStartTimeStamp.getHours())}:${formatTime(reservationStartTimeStamp.getMinutes())}`
         setGuestReservation(reservation)
         setIsLoading(false)
         if(reservation.endedAt){
           const reservationEndTimeStamp = new Date(reservation.endedAt)
-          reservation.endDate = `${reservationEndTimeStamp.getDay()}/${reservationEndTimeStamp.getMonth()}/${reservationEndTimeStamp.getFullYear()}`
-          reservation.endTime = `${reservationEndTimeStamp.getHours()}:${reservationEndTimeStamp.getMinutes()}`
+          reservation.endDate = `${formatTime(reservationEndTimeStamp.getDate())}/${formatTime(reservationEndTimeStamp.getMonth() + 1)}/${reservationEndTimeStamp.getFullYear()}`
+          reservation.endTime = `${formatTime(reservationEndTimeStamp.getHours())}:${formatTime(reservationEndTimeStamp.getMinutes())}`
           const duration = calculateDurationInHours(reservation.createdAt, reservation.endedAt)
           reservation.duration = duration
           reservation.price = calculatePrice(reservation.parkingLot.pricing, duration)
@@ -100,7 +120,7 @@ function OneReservationPage() {
     const durationInHours = Math.ceil((endDate.valueOf() - startDate.valueOf())/3600000)
     return durationInHours
   }
-  
+
   const calculatePrice = (pricing, durationInHours) => {
     let price = 0
     if(durationInHours >= 24){
