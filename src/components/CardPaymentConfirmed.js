@@ -1,5 +1,4 @@
 import './CardPaymentConfirmed.css'
-import completeCheckIcon from '../assets/styles/icons/check_complete_done_green_success_icon (2).png'
 import arrow from '../assets/styles/icons/arrow.png'
 import paymentComplete from '../assets/styles/icons/payment-complete.png'
 

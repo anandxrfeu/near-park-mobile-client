@@ -45,14 +45,14 @@ function CheckInForm() {
 
         <div className="d-flex flex-column align-items-center">
           <div style={{marginTop: "50px"}}>
-            <h3 style={{fontWeight: "bold", fontSize: "24px"}}>TICKET# wHw3y</h3>
+            <h3 style={{fontWeight: "bold", fontSize: "24px"}}>TICKET</h3>
           </div>
           <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
             <div style={{marginTop: "30px"}}>
               <input className="badge-pill"
                 style={{border: "1px solid black", width: "220px", height: "44px", textAlign: "center"}}
                 placeholder = "CellPhone Number"
-                type="number"
+                type="tel"
                 name="GuestUserPhone"
                 onChange={(e) => setGuestUserPhone(e.target.value) }
                 value={guestUserPhone}
