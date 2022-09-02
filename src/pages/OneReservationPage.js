@@ -45,13 +45,13 @@ function OneReservationPage() {
         console.log(reservation)
 
         const reservationStartTimeStamp = new Date(reservation.createdAt)
-        reservation.startDate = `${formatTime(reservationStartTimeStamp.getDay())}/${formatTime(reservationStartTimeStamp.getMonth())}/${reservationStartTimeStamp.getFullYear()}`
+        reservation.startDate = `${formatTime(reservationStartTimeStamp.getDate())}/${formatTime(reservationStartTimeStamp.getMonth() + 1)}/${reservationStartTimeStamp.getFullYear()}`
         reservation.startTime = `${formatTime(reservationStartTimeStamp.getHours())}:${formatTime(reservationStartTimeStamp.getMinutes())}`
         setGuestReservation(reservation)
         setIsLoading(false)
         if(reservation.endedAt){
           const reservationEndTimeStamp = new Date(reservation.endedAt)
-          reservation.endDate = `${formatTime(reservationEndTimeStamp.getDay())}/${formatTime(reservationEndTimeStamp.getMonth())}/${reservationEndTimeStamp.getFullYear()}`
+          reservation.endDate = `${formatTime(reservationEndTimeStamp.getDate())}/${formatTime(reservationEndTimeStamp.getMonth() + 1)}/${reservationEndTimeStamp.getFullYear()}`
           reservation.endTime = `${formatTime(reservationEndTimeStamp.getHours())}:${formatTime(reservationEndTimeStamp.getMinutes())}`
           const duration = calculateDurationInHours(reservation.createdAt, reservation.endedAt)
           reservation.duration = duration
