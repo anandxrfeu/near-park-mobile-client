@@ -83,7 +83,8 @@ function OneReservationPage() {
     }
   }
 
-  const makePayment = async () => {
+  const makePayment = async (e) => {
+    e.preventDefault()
     try{
       const updatedReservation = await apiService.updateReservation(phoneNumber, { "status": "PAID"})
       console.log(updatedReservation)
