@@ -1,6 +1,6 @@
-import validator from 'validator';
+import isLicensePlate from 'validator/lib/isLicensePlate';
 import {useState, useRef} from "react"
-import {useParams, useNavigate, renderMatches} from 'react-router-dom'
+import {useParams, useNavigate} from 'react-router-dom'
 import apiService from "../services/api.service"
 
 function CheckInForm() {
@@ -19,7 +19,7 @@ function CheckInForm() {
   const onSubmitHandler = async (e) => {
     e.preventDefault()
     
-    if(validator.isLicensePlate(LicensePlate.current.value, ['pt-BR'])){
+    if(isLicensePlate(LicensePlate.current.value, ['pt-BR'])){
       
       const payload = {
         vehicle: {
