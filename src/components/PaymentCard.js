@@ -29,7 +29,7 @@ const PaymentCard = (props) => {
                   <div className="credit-card-row">
                           <div className="input-group">
                             <input 
-                            type="number"
+                            type="tel"
                             maxLength="16"
                             className="form-control"
                             name="cardNumber"
