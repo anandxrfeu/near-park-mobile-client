@@ -1,6 +1,7 @@
 import {useState} from "react"
 import {useParams, useNavigate} from 'react-router-dom'
 import apiService from "../services/api.service"
+import NavbarMobile from "./NavbarMobile"
 
 function CheckInForm() {
   const {id} = useParams()
@@ -41,16 +42,26 @@ function CheckInForm() {
 
   return (
     <div className="text-center">
+      <div style={{display:"flex", justifyContent: "center", alignItems:"center"}}>
+        <NavbarMobile/>
+      </div>
+
+
       <form onSubmit={onSubmitHandler}>
 
         <div className="d-flex flex-column align-items-center">
+<<<<<<< HEAD
+          <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop:"30%"}}>
+            <div style={{marginTop: "16px"}}>
+=======
           <div style={{marginTop: "50px"}}>
             <h3 style={{fontWeight: "bold", fontSize: "24px"}}>TICKET</h3>
           </div>
           <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
             <div style={{marginTop: "30px"}}>
+>>>>>>> eaca6b5a964df0114dea0a98f5e5b48ec65b7bb0
               <input className="badge-pill"
-                style={{border: "1px solid black", width: "220px", height: "44px", textAlign: "center"}}
+                style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
                 placeholder = "CellPhone Number"
                 type="tel"
                 name="GuestUserPhone"
@@ -60,10 +71,10 @@ function CheckInForm() {
 
             </div>
 
-            <div style={{marginTop: "8px"}}>
-            <div style={{marginTop: "30px"}}>
+
+            <div style={{marginTop: "40px"}}>
               <input className="badge-pill"
-                style={{border: "1px solid black", width: "220px", height: "44px", textAlign: "center"}}
+                style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
                 placeholder = "License Plate"
                 type="text"
                 name="LicensePlate"
@@ -73,8 +84,7 @@ function CheckInForm() {
 
             </div>
 
-            </div>
-            <div style={{marginTop: "40px"}} >
+            <div style={{marginTop: "16px"}} >
               <select value={vehicleType} className="badge-pill"
                 style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
               onChange={(e) => setVehicleType(e.target.value) }>
@@ -84,7 +94,7 @@ function CheckInForm() {
               </select>
             </div>
 
-            <div style={{marginTop: "10px"}}>
+            <div style={{marginTop: "16px"}}>
               <input className="badge-pill"
                 style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
                 placeholder = "Vehicle Description"

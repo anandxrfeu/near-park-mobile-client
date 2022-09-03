@@ -11,7 +11,9 @@ function CardPaymentConfirmed(props) {
 
       <div className="d-flex flex-column align-items-center">
         <div style={{marginTop: "50px"}}>
-          <h3 style={{fontWeight: "bold", fontSize: "24px"}}>TICKET# {guestReservation.ticket}</h3>
+          <h3 style={{fontWeight: "bold", fontSize: "24px"}}>TICKET<span
+          style={{marginLeft:"4px", border:"1px solid black", padding:"4px", borderRadius: "8px"}}
+          >{guestReservation.ticket}</span></h3>
         </div>
         <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
           <div style={{marginTop: "16px"}}>
