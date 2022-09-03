@@ -36,7 +36,7 @@ function SearchReservation() {
                       <input className="badge-pill"
                         style={{width:"260px", height: "50px", textAlign: "center", fontSize: "20px", fontWeight: "bold"}}
                         placeholder = "Cel Number"
-                        type="number"
+                        type="tel"
                         name="guestUserPhone"
                         ref={guestUserPhone}
                       />

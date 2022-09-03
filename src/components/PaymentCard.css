@@ -1,36 +1,22 @@
-.Cards {
+.credit-card-box {
+  width: 90%;
+  margin-top: 4rem;
+}
+
+.credit-card-row {
+  margin-top: 0.4rem;
+}
+
+.expiry-cv {
   display: flex;
-  width: 40vh;
-  height: 20vh;
-  flex-direction: column;
-  border-radius: 8px;
-  padding-bottom: 46px;
-  padding-right: 14px;
-  padding-left: 14px;
 }
 
-.BankLogo {
-  display: flex;
-  justify-content: right;
-  margin-right: 6px;
-  color: black;
+
+.card-expiry {
+  width: 70%;
+  margin-right: 0.4rem;
 }
 
-#Number {
-  font-size: 28px;
-  font-weight: bold;
-  color: black;
-}
-
-.DatesandBank {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  color: black;
-}
-
-#Owner {
-  float: left;
-  color: black;
-  margin-top: 5px;
+.card-cvc {
+  width: 30%;
 }
