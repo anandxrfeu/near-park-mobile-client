@@ -50,16 +50,11 @@ function CheckInForm() {
       <form onSubmit={onSubmitHandler}>
 
         <div className="d-flex flex-column align-items-center">
-<<<<<<< HEAD
-          <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop:"30%"}}>
-            <div style={{marginTop: "16px"}}>
-=======
           <div style={{marginTop: "50px"}}>
             <h3 style={{fontWeight: "bold", fontSize: "24px"}}>TICKET</h3>
           </div>
           <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
             <div style={{marginTop: "30px"}}>
->>>>>>> eaca6b5a964df0114dea0a98f5e5b48ec65b7bb0
               <input className="badge-pill"
                 style={{border: "1px solid black", width: "220px", height: "50px", textAlign: "center"}}
                 placeholder = "CellPhone Number"
